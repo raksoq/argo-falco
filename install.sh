@@ -1,9 +1,6 @@
 #!/bin/bash
 
-echo " -- Install ArgoCD --"
-kubectl create namespace argocd
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-echo ""
+
 echo " -- Install Argo Events --"
 kubectl create namespace argo-events
 kubectl apply -n argo-events -f https://raw.githubusercontent.com/argoproj/argo-events/stable/manifests/install.yaml
@@ -29,12 +26,4 @@ ARGOCD_SERVER=$(kubectl get pods -n argocd | grep argocd-server | cut -f1 -d" ")
 ARGOWORKFLOW_SERVER=$(kubectl get pods -n argo | grep argo-server | cut -f1 -d" ")
 kubectl -n argocd wait pod/${ARGOCD_SERVER} --for=condition=Ready --timeout=-1s
 kubectl -n argo wait pod/${ARGOWORKFLOW_SERVER} --for=condition=Ready --timeout=-1s
-echo ""
-echo "-- Access to Argo CD, Argo Workflow UI and Falcosidekick UI --"
-kubectl port-forward svc/argo-server -n argo 2746:2746 &
-kubectl port-forward svc/argocd-server -n argocd 8080:443 &
-kubectl port-forward svc/falco-falcosidekick-ui -n falco 2802:2802 &
-ARGO_PASSWORD=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)
-echo -e "\033[0;31mLink for ArgoCD UI https://localhost:8080 (credentials are admin / ${ARGO_PASSWORD})\033[0m"
-echo -e "\033[0;31mLink for Argo Workflow UI https://localhost:2746\033[0m"
-echo -e "\033[0;31mLink for Falcosidekick UI http://localhost:2802/ui\033[0m"
+echo "DONE"
