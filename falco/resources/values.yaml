@@ -1,4 +1,6 @@
 falco:
+    ebpf:
+      enabled: true
     falcosidekick:
         enabled: true
         webui:
