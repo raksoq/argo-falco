@@ -1,5 +1,5 @@
 apiVersion: v2
-version: v0.30.0
+version: v0.30.1
 name: falco
 dependencies:
 - name: falco
