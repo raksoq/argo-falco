@@ -17,7 +17,7 @@ kubectl create namespace argov2
 # updated wversion test #1
 kubectl apply -n argov2 -f https://raw.githubusercontent.com/argoproj/argo-workflows/main/manifests/quick-start-minimal.yaml
 
-kubectl patch -n argo cm workflow-controller-configmap -p '{"data": {"containerRuntimeExecutor": "pns"}}'
+kubectl patch -n argov2 cm workflow-controller-configmap -p '{"data": {"containerRuntimeExecutor": "pns"}}'
 kubectl apply -f argo-workflow/deployment/project.yaml -n argocd
 kubectl apply -f argo-workflow/deployment/application.yaml -n argocd
 echo ""
