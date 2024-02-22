@@ -4,25 +4,25 @@
 #kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 #echo ""
 echo " -- Install Argo Events --"
-kubectl create namespace argo-event
-kubectl apply -n argo-events -f https://raw.githubusercontent.com/argoproj/argo-events/stable/manifests/install.yaml
-kubectl apply -n argo-events -f https://raw.githubusercontent.com/argoproj/argo-events/stable/manifests/install-validating-webhook.yaml
-kubectl apply -n argo-events -f https://raw.githubusercontent.com/argoproj/argo-events/stable/examples/eventbus/native.yaml
+kubectl create namespace argo-eventsv2
+kubectl apply -n argo-eventsv2 -f https://raw.githubusercontent.com/argoproj/argo-events/stable/manifests/install.yaml
+kubectl apply -n argo-eventsv2 -f https://raw.githubusercontent.com/argoproj/argo-events/stable/manifests/install-validating-webhook.yaml
+kubectl apply -n argo-eventsv2 -f https://raw.githubusercontent.com/argoproj/argo-events/stable/examples/eventbus/native.yaml
 kubectl apply -f argo-events/deployment/project.yaml -n argocd
 kubectl apply -f argo-events/deployment/application.yaml -n argocd
 echo ""
 echo "-- Install Argo Worklows --"
-kubectl create namespace argo
-# kubectl apply -n argo -f https://raw.githubusercontent.com/argoproj/argo-workflows/stable/manifests/install.yaml
+kubectl create namespace argov2
+# kubectl apply -n argov2 -f https://raw.githubusercontent.com/argoproj/argo-workflows/stable/manifests/install.yaml
 # updated wversion test #1
-kubectl apply -n argo -f https://raw.githubusercontent.com/argoproj/argo-workflows/main/manifests/quick-start-minimal.yaml
+kubectl apply -n argov2 -f https://raw.githubusercontent.com/argoproj/argo-workflows/main/manifests/quick-start-minimal.yaml
 
 kubectl patch -n argo cm workflow-controller-configmap -p '{"data": {"containerRuntimeExecutor": "pns"}}'
 kubectl apply -f argo-workflow/deployment/project.yaml -n argocd
 kubectl apply -f argo-workflow/deployment/application.yaml -n argocd
 echo ""
 echo "-- Install Falco --"
-#kubectl create namespace falco
+#kubectl create namespace falcov2
 #kubectl apply -f falco/deployment/project.yaml -n argocd
 #kubectl apply -f falco/deployment/application.yaml -n argocd
 echo ""
